@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me - Lego Batman</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+    <header>
+        <h1>I Am Batman</h1>
+        <p>...but you can call me Lego Batman.</p>
+    </header>
+    
+    <section id="about">
+        <h2>About Me</h2>
+        <p>Fighting crime in Gotham, building with LEGOs, and being awesome. That's me.</p>
+        <img src="batman.jpg" alt="Lego Batman" width="300">
+    </section>
+    
+    <section id="missions">
+        <h2>Current Missions</h2>
+        <p>Keeping Gotham safe from villains like The Joker, Bane, and my personal favorite: calendar-related criminals.</p>
+    </section>
+    
+    <section id="map">
+        <h2>Gotham Crime Map</h2>
+        <div id="gotham-map"></div>
+    </section>
+    
+    <footer>
+        <p>For business inquiries, contact <a href="https://www.wayneenterprises.com" target="_blank">Wayne Enterprises</a>.</p>
+        <p>Follow the legends: 
+            <a href="https://twitter.com/michaelkeaton" target="_blank">Michael Keaton</a> | 
+            <a href="https://twitter.com/christianbale" target="_blank">Christian Bale</a> | 
+            <a href="https://twitter.com/benaffleck" target="_blank">Ben Affleck</a> | 
+            <a href="https://twitter.com/robertpattinson" target="_blank">Robert Pattinson</a>
+        </p>
+    </footer>
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        let gotham = [40.7128, -74.0060]; // Gotham city (starting location)
+
+        // Create the map
+        const map = L.map('gotham-map').setView(gotham, 12);
+
+        // Dark map tiles (Gotham-style theme)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            maxZoom: 19,
+            id: 'mapbox.dark'
+        }).addTo(map);
+
+        // Add Batman's location
+        const batmanMarker = L.marker(gotham, { icon: L.divIcon({ className: 'batman-icon', html: '🦇', iconSize: [500, 500] }) }).addTo(map)
+            .bindPopup("<b>Lego Batman's Location</b><br>Gotham City")
+            .openPopup();
+
+        // Static crime points (just a few points for simplicity)
+        const crimePoints = [
+            [40.7158, -74.0110],  // Crime point 1
+            [40.7188, -74.0030],  // Crime point 2
+            [40.7200, -74.0055]   // Crime point 3
+        ];
+
+        // Add crime points to the map
+        crimePoints.forEach(point => {
+            L.marker(point).addTo(map)
+                .bindPopup("<b>Crime Scene</b><br>Gotham City")
+                .openPopup();
+        });
+    </script>
+</body>
+</html>
